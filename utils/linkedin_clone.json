@@ -1,0 +1,84 @@
+{
+  "version": "0.1.0",
+  "name": "programs",
+  "instructions": [
+    {
+      "name": "createState",
+      "accounts": [
+        { "name": "state", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "username", "type": "string" },
+        { "name": "pictureUrl", "type": "string" }
+      ]
+    },
+    {
+      "name": "createPost",
+      "accounts": [
+        { "name": "state", "isMut": true, "isSigner": false },
+        { "name": "post", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "clock", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "text", "type": "string" },
+        { "name": "posterName", "type": "string" },
+        { "name": "posterUrl", "type": "string" }
+      ]
+    },
+    {
+      "name": "addFriend",
+      "accounts": [
+        { "name": "state", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": false, "isSigner": true },
+        { "name": "friend", "isMut": true, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [{ "name": "friend", "type": "publicKey" }]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "StateAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "authority", "type": "publicKey" },
+          { "name": "username", "type": "string" },
+          { "name": "pictureUrl", "type": "string" },
+          { "name": "postCount", "type": "u64" },
+          { "name": "friends", "type": { "vec": "publicKey" } }
+        ]
+      }
+    },
+    {
+      "name": "PostAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "authority", "type": "publicKey" },
+          { "name": "text", "type": "string" },
+          { "name": "posterName", "type": "string" },
+          { "name": "posterUrl", "type": "string" },
+          { "name": "index", "type": "u64" },
+          { "name": "postTime", "type": "i64" }
+        ]
+      }
+    },
+    {
+      "name": "FriendAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "owner", "type": "publicKey" },
+          { "name": "friend", "type": "publicKey" }
+        ]
+      }
+    }
+  ]
+}
